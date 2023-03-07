@@ -1,0 +1,624 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DFF0DC1C29B7376D00FB6852 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC1B29B7376D00FB6852 /* AppDelegate.swift */; };
+		DFF0DC1E29B7376D00FB6852 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC1D29B7376D00FB6852 /* SceneDelegate.swift */; };
+		DFF0DC2029B7376D00FB6852 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC1F29B7376D00FB6852 /* ViewController.swift */; };
+		DFF0DC2329B7376D00FB6852 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFF0DC2129B7376D00FB6852 /* Main.storyboard */; };
+		DFF0DC2629B7376D00FB6852 /* clove.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC2429B7376D00FB6852 /* clove.xcdatamodeld */; };
+		DFF0DC2829B7377300FB6852 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFF0DC2729B7377300FB6852 /* Assets.xcassets */; };
+		DFF0DC2B29B7377300FB6852 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFF0DC2929B7377300FB6852 /* LaunchScreen.storyboard */; };
+		DFF0DC3629B7377500FB6852 /* cloveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC3529B7377500FB6852 /* cloveTests.swift */; };
+		DFF0DC4029B7377500FB6852 /* cloveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC3F29B7377500FB6852 /* cloveUITests.swift */; };
+		DFF0DC4229B7377500FB6852 /* cloveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC4129B7377500FB6852 /* cloveUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DFF0DC3229B7377500FB6852 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFF0DC1029B7376D00FB6852 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFF0DC1729B7376D00FB6852;
+			remoteInfo = clove;
+		};
+		DFF0DC3C29B7377500FB6852 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DFF0DC1029B7376D00FB6852 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DFF0DC1729B7376D00FB6852;
+			remoteInfo = clove;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DFF0DC1829B7376D00FB6852 /* clove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = clove.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFF0DC1B29B7376D00FB6852 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DFF0DC1D29B7376D00FB6852 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DFF0DC1F29B7376D00FB6852 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DFF0DC2229B7376D00FB6852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DFF0DC2529B7376D00FB6852 /* clove.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = clove.xcdatamodel; sourceTree = "<group>"; };
+		DFF0DC2729B7377300FB6852 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DFF0DC2A29B7377300FB6852 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DFF0DC2C29B7377300FB6852 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFF0DC3129B7377500FB6852 /* cloveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cloveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFF0DC3529B7377500FB6852 /* cloveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cloveTests.swift; sourceTree = "<group>"; };
+		DFF0DC3B29B7377500FB6852 /* cloveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cloveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DFF0DC3F29B7377500FB6852 /* cloveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cloveUITests.swift; sourceTree = "<group>"; };
+		DFF0DC4129B7377500FB6852 /* cloveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cloveUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DFF0DC1529B7376D00FB6852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFF0DC2E29B7377500FB6852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFF0DC3829B7377500FB6852 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DFF0DC0F29B7376D00FB6852 = {
+			isa = PBXGroup;
+			children = (
+				DFF0DC1A29B7376D00FB6852 /* clove */,
+				DFF0DC3429B7377500FB6852 /* cloveTests */,
+				DFF0DC3E29B7377500FB6852 /* cloveUITests */,
+				DFF0DC1929B7376D00FB6852 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DFF0DC1929B7376D00FB6852 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DFF0DC1829B7376D00FB6852 /* clove.app */,
+				DFF0DC3129B7377500FB6852 /* cloveTests.xctest */,
+				DFF0DC3B29B7377500FB6852 /* cloveUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DFF0DC1A29B7376D00FB6852 /* clove */ = {
+			isa = PBXGroup;
+			children = (
+				DFF0DC1B29B7376D00FB6852 /* AppDelegate.swift */,
+				DFF0DC1D29B7376D00FB6852 /* SceneDelegate.swift */,
+				DFF0DC1F29B7376D00FB6852 /* ViewController.swift */,
+				DFF0DC2129B7376D00FB6852 /* Main.storyboard */,
+				DFF0DC2729B7377300FB6852 /* Assets.xcassets */,
+				DFF0DC2929B7377300FB6852 /* LaunchScreen.storyboard */,
+				DFF0DC2C29B7377300FB6852 /* Info.plist */,
+				DFF0DC2429B7376D00FB6852 /* clove.xcdatamodeld */,
+			);
+			path = clove;
+			sourceTree = "<group>";
+		};
+		DFF0DC3429B7377500FB6852 /* cloveTests */ = {
+			isa = PBXGroup;
+			children = (
+				DFF0DC3529B7377500FB6852 /* cloveTests.swift */,
+			);
+			path = cloveTests;
+			sourceTree = "<group>";
+		};
+		DFF0DC3E29B7377500FB6852 /* cloveUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DFF0DC3F29B7377500FB6852 /* cloveUITests.swift */,
+				DFF0DC4129B7377500FB6852 /* cloveUITestsLaunchTests.swift */,
+			);
+			path = cloveUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DFF0DC1729B7376D00FB6852 /* clove */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFF0DC4529B7377500FB6852 /* Build configuration list for PBXNativeTarget "clove" */;
+			buildPhases = (
+				DFF0DC1429B7376D00FB6852 /* Sources */,
+				DFF0DC1529B7376D00FB6852 /* Frameworks */,
+				DFF0DC1629B7376D00FB6852 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = clove;
+			productName = clove;
+			productReference = DFF0DC1829B7376D00FB6852 /* clove.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DFF0DC3029B7377500FB6852 /* cloveTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFF0DC4829B7377500FB6852 /* Build configuration list for PBXNativeTarget "cloveTests" */;
+			buildPhases = (
+				DFF0DC2D29B7377500FB6852 /* Sources */,
+				DFF0DC2E29B7377500FB6852 /* Frameworks */,
+				DFF0DC2F29B7377500FB6852 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DFF0DC3329B7377500FB6852 /* PBXTargetDependency */,
+			);
+			name = cloveTests;
+			productName = cloveTests;
+			productReference = DFF0DC3129B7377500FB6852 /* cloveTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DFF0DC3A29B7377500FB6852 /* cloveUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DFF0DC4B29B7377500FB6852 /* Build configuration list for PBXNativeTarget "cloveUITests" */;
+			buildPhases = (
+				DFF0DC3729B7377500FB6852 /* Sources */,
+				DFF0DC3829B7377500FB6852 /* Frameworks */,
+				DFF0DC3929B7377500FB6852 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DFF0DC3D29B7377500FB6852 /* PBXTargetDependency */,
+			);
+			name = cloveUITests;
+			productName = cloveUITests;
+			productReference = DFF0DC3B29B7377500FB6852 /* cloveUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DFF0DC1029B7376D00FB6852 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					DFF0DC1729B7376D00FB6852 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					DFF0DC3029B7377500FB6852 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = DFF0DC1729B7376D00FB6852;
+					};
+					DFF0DC3A29B7377500FB6852 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = DFF0DC1729B7376D00FB6852;
+					};
+				};
+			};
+			buildConfigurationList = DFF0DC1329B7376D00FB6852 /* Build configuration list for PBXProject "clove" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DFF0DC0F29B7376D00FB6852;
+			productRefGroup = DFF0DC1929B7376D00FB6852 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DFF0DC1729B7376D00FB6852 /* clove */,
+				DFF0DC3029B7377500FB6852 /* cloveTests */,
+				DFF0DC3A29B7377500FB6852 /* cloveUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DFF0DC1629B7376D00FB6852 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFF0DC2B29B7377300FB6852 /* LaunchScreen.storyboard in Resources */,
+				DFF0DC2829B7377300FB6852 /* Assets.xcassets in Resources */,
+				DFF0DC2329B7376D00FB6852 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFF0DC2F29B7377500FB6852 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFF0DC3929B7377500FB6852 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DFF0DC1429B7376D00FB6852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFF0DC2029B7376D00FB6852 /* ViewController.swift in Sources */,
+				DFF0DC1C29B7376D00FB6852 /* AppDelegate.swift in Sources */,
+				DFF0DC1E29B7376D00FB6852 /* SceneDelegate.swift in Sources */,
+				DFF0DC2629B7376D00FB6852 /* clove.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFF0DC2D29B7377500FB6852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFF0DC3629B7377500FB6852 /* cloveTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DFF0DC3729B7377500FB6852 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DFF0DC4229B7377500FB6852 /* cloveUITestsLaunchTests.swift in Sources */,
+				DFF0DC4029B7377500FB6852 /* cloveUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DFF0DC3329B7377500FB6852 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFF0DC1729B7376D00FB6852 /* clove */;
+			targetProxy = DFF0DC3229B7377500FB6852 /* PBXContainerItemProxy */;
+		};
+		DFF0DC3D29B7377500FB6852 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DFF0DC1729B7376D00FB6852 /* clove */;
+			targetProxy = DFF0DC3C29B7377500FB6852 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DFF0DC2129B7376D00FB6852 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFF0DC2229B7376D00FB6852 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DFF0DC2929B7377300FB6852 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DFF0DC2A29B7377300FB6852 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DFF0DC4329B7377500FB6852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DFF0DC4429B7377500FB6852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DFF0DC4629B7377500FB6852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5W669BK4JQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = clove/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tolu.cc.clove;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DFF0DC4729B7377500FB6852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5W669BK4JQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = clove/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tolu.cc.clove;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DFF0DC4929B7377500FB6852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5W669BK4JQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tolu.cc.cloveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clove.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/clove";
+			};
+			name = Debug;
+		};
+		DFF0DC4A29B7377500FB6852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5W669BK4JQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tolu.cc.cloveTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/clove.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/clove";
+			};
+			name = Release;
+		};
+		DFF0DC4C29B7377500FB6852 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5W669BK4JQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tolu.cc.cloveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = clove;
+			};
+			name = Debug;
+		};
+		DFF0DC4D29B7377500FB6852 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5W669BK4JQ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = tolu.cc.cloveUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = clove;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DFF0DC1329B7376D00FB6852 /* Build configuration list for PBXProject "clove" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFF0DC4329B7377500FB6852 /* Debug */,
+				DFF0DC4429B7377500FB6852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFF0DC4529B7377500FB6852 /* Build configuration list for PBXNativeTarget "clove" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFF0DC4629B7377500FB6852 /* Debug */,
+				DFF0DC4729B7377500FB6852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFF0DC4829B7377500FB6852 /* Build configuration list for PBXNativeTarget "cloveTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFF0DC4929B7377500FB6852 /* Debug */,
+				DFF0DC4A29B7377500FB6852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DFF0DC4B29B7377500FB6852 /* Build configuration list for PBXNativeTarget "cloveUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DFF0DC4C29B7377500FB6852 /* Debug */,
+				DFF0DC4D29B7377500FB6852 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DFF0DC2429B7376D00FB6852 /* clove.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DFF0DC2529B7376D00FB6852 /* clove.xcdatamodel */,
+			);
+			currentVersion = DFF0DC2529B7376D00FB6852 /* clove.xcdatamodel */;
+			path = clove.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = DFF0DC1029B7376D00FB6852 /* Project object */;
+}
