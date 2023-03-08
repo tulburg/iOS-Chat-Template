@@ -146,7 +146,7 @@ extension UIView {
     }
     
     func showIndicator(size: UIActivityIndicatorView.Style, color: UIColor) {
-        showIndicator(size: size, color: color, background: Color.create(0xFFFFFF, dark: 0x000000).withAlphaComponent(size == .large ? 0.6 : 0.9))
+        showIndicator(size: size, color: color, background: UIColor.create(0xFFFFFF, dark: 0x000000).withAlphaComponent(size == .large ? 0.6 : 0.9))
     }
     
     func hideIndicator() {
@@ -192,12 +192,6 @@ extension UIView {
     }
 }
 
-extension UIColor {
-    convenience init(hex: Int) {
-        self.init(red: CGFloat((hex >> 16) & 0xff) / 255.0, green: CGFloat((hex >> 8) & 0xff) / 255.0, blue: CGFloat(hex & 0xff) / 255.0, alpha: 1)
-    }
-}
-
 extension UILabel {
     convenience init(_ text: String, _ color: UIColor?, _ font: UIFont?) {
         self.init()
@@ -213,7 +207,7 @@ extension UILabel {
 }
 
 extension Data {
-    func toDictionary() -> Dictionary<String, Any> {
+    func json() -> Dictionary<String, Any> {
         do {
             return try JSONSerialization.jsonObject(with: self, options: []) as! Dictionary<String, Any>
         } catch {
@@ -347,7 +341,7 @@ extension UIImageView {
     func asButton() {
         contentMode = .center
         layer.borderWidth = 1
-        layer.borderColor = Color.separator.cgColor
+        layer.borderColor = UIColor.separator.cgColor
         layer.cornerRadius = 15
     }
 }
@@ -363,7 +357,7 @@ extension UIButton {
             self.imageEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 16)
         }
         
-        self.backgroundColor = Color.purple
+        self.backgroundColor = UIColor.purple
         self.titleLabel?.textColor = UIColor.white
         self.layer.cornerRadius = 12
     }
@@ -386,19 +380,39 @@ extension UIButton {
     
 }
 
-extension UITextField {
-    convenience init(_ hint: String) {
-        self.init()
-        self.placeholder = hint;
-        self.backgroundColor = Color.formInput
-        self.textColor = Color.black_white
-        self.clipsToBounds = true
-        self.layer.cornerRadius = 22
-        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
-        self.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 16, height: 20))
-        self.leftViewMode = .always
+extension Character {
+    var isSimpleEmoji: Bool {
+        guard let firstScalar = unicodeScalars.first else { return false }
+        return firstScalar.properties.isEmoji && firstScalar.value > 0x238C
     }
+    
+    var isCombinedIntoEmoji: Bool { unicodeScalars.count > 1 && unicodeScalars.first?.properties.isEmoji ?? false && unicodeScalars.last?.properties.isEmoji ?? false }
+    
+    var isEmoji: Bool { isSimpleEmoji || isCombinedIntoEmoji }
 }
+
+extension String {
+    var isSingleEmoji: Bool { count == 1 && containsEmoji }
+    var containsEmoji: Bool { contains { $0.isEmoji } }
+    var containsOnlyEmoji: Bool { !isEmpty && !contains { !$0.isEmoji } }
+    var emojiString: String { emojis.map { String($0) }.reduce("", +) }
+    var emojis: [Character] { filter { $0.isEmoji } }
+    var emojiScalars: [UnicodeScalar] { filter { $0.isEmoji }.flatMap { $0.unicodeScalars } }
+}
+
+//extension UITextField {
+//    convenience init(_ hint: String) {
+//        self.init()
+//        self.placeholder = hint;
+//        self.backgroundColor = UIColor.formInput
+//        self.textColor = UIColor.black_white
+//        self.clipsToBounds = true
+//        self.layer.cornerRadius = 22
+//        self.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 20))
+//        self.leftViewRect(forBounds: CGRect(x: 0, y: 0, width: 16, height: 20))
+//        self.leftViewMode = .always
+//    }
+//}
 
 extension UITableView {
     convenience init(background: UIColor, delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
@@ -481,6 +495,8 @@ extension UIColor {
     static let red = UIColor(hex: 0xFFBCBC)
     static let orange = UIColor(hex: 0xFFD9AD)
     
+    static let accent = UIColor(hex: 0x784AC2)
+    static let primary = UIColor(hex: 0x2E466B)
     
     static let background = create(0xFFFFFF, dark: 0x101010)
     static let darkBackground = create(0xf5f5f5, dark: 0x252525)
@@ -599,9 +615,9 @@ extension UITextView {
     
     private func resizePlaceholder() {
         if let placeholderLabel = self.viewWithTag(100) as! UILabel? {
-            let labelX = self.textContainer.lineFragmentPadding
-            let labelY = self.textContainerInset.top - 2
-            let labelWidth = max(self.frame.width - (labelX * 2), 80)
+            let labelX = self.textContainerInset.left + textContainer.lineFragmentPadding
+            let labelY = self.textContainerInset.top
+            let labelWidth = max(self.frame.width, 120)
             let labelHeight = placeholderLabel.frame.height
             placeholderLabel.frame = CGRect(x: labelX, y: labelY, width: labelWidth, height: labelHeight)
         }

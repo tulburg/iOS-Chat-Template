@@ -29,6 +29,12 @@
 		DFF0DC6129B746C500FB6852 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5929B746C500FB6852 /* Responses.swift */; };
 		DFF0DC6229B746C500FB6852 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5A29B746C500FB6852 /* Api.swift */; };
 		DFF0DC6329B746C500FB6852 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5B29B746C500FB6852 /* Socket.swift */; };
+		DFF0DC6529B7DE1D00FB6852 /* MessagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC6429B7DE1D00FB6852 /* MessagerViewController.swift */; };
+		DFF0DC6729B7DE4A00FB6852 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC6629B7DE4A00FB6852 /* ViewController.swift */; };
+		DFF0DC6929B7E43800FB6852 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC6829B7E43800FB6852 /* NavigationController.swift */; };
+		DFF0DC6C29B7F15A00FB6852 /* OtherMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC6B29B7F15A00FB6852 /* OtherMessageCell.swift */; };
+		DFF0DC6E29B7F2B600FB6852 /* OwnMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC6D29B7F2B600FB6852 /* OwnMessageCell.swift */; };
+		DFF0DC7029B7F95300FB6852 /* TailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC6F29B7F95300FB6852 /* TailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +87,12 @@
 		DFF0DC5929B746C500FB6852 /* Responses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
 		DFF0DC5A29B746C500FB6852 /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		DFF0DC5B29B746C500FB6852 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
+		DFF0DC6429B7DE1D00FB6852 /* MessagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagerViewController.swift; sourceTree = "<group>"; };
+		DFF0DC6629B7DE4A00FB6852 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DFF0DC6829B7E43800FB6852 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		DFF0DC6B29B7F15A00FB6852 /* OtherMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherMessageCell.swift; sourceTree = "<group>"; };
+		DFF0DC6D29B7F2B600FB6852 /* OwnMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnMessageCell.swift; sourceTree = "<group>"; };
+		DFF0DC6F29B7F95300FB6852 /* TailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +171,7 @@
 		DFF0DC1A29B7376D00FB6852 /* clove */ = {
 			isa = PBXGroup;
 			children = (
+				DFF0DC6A29B7F14A00FB6852 /* Cells */,
 				DFF0DC5329B745D600FB6852 /* Utilities */,
 				DFF0DC5129B73B8C00FB6852 /* Delegates */,
 				DFF0DC5229B73BA400FB6852 /* ViewControllers */,
@@ -202,6 +215,9 @@
 			isa = PBXGroup;
 			children = (
 				DFF0DC1F29B7376D00FB6852 /* LoginController.swift */,
+				DFF0DC6429B7DE1D00FB6852 /* MessagerViewController.swift */,
+				DFF0DC6629B7DE4A00FB6852 /* ViewController.swift */,
+				DFF0DC6829B7E43800FB6852 /* NavigationController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -219,6 +235,16 @@
 				DFF0DC5B29B746C500FB6852 /* Socket.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		DFF0DC6A29B7F14A00FB6852 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DFF0DC6B29B7F15A00FB6852 /* OtherMessageCell.swift */,
+				DFF0DC6D29B7F2B600FB6852 /* OwnMessageCell.swift */,
+				DFF0DC6F29B7F95300FB6852 /* TailView.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -460,13 +486,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFF0DC6729B7DE4A00FB6852 /* ViewController.swift in Sources */,
 				DFF0DC4F29B738D800FB6852 /* Extensions.swift in Sources */,
 				DFF0DC2029B7376D00FB6852 /* LoginController.swift in Sources */,
 				DFF0DC1C29B7376D00FB6852 /* AppDelegate.swift in Sources */,
+				DFF0DC7029B7F95300FB6852 /* TailView.swift in Sources */,
+				DFF0DC6E29B7F2B600FB6852 /* OwnMessageCell.swift in Sources */,
+				DFF0DC6C29B7F15A00FB6852 /* OtherMessageCell.swift in Sources */,
 				DFF0DC5F29B746C500FB6852 /* ImageCache.swift in Sources */,
 				DFF0DC1E29B7376D00FB6852 /* SceneDelegate.swift in Sources */,
+				DFF0DC6529B7DE1D00FB6852 /* MessagerViewController.swift in Sources */,
 				DFF0DC6029B746C500FB6852 /* Protocols.swift in Sources */,
 				DFF0DC6229B746C500FB6852 /* Api.swift in Sources */,
+				DFF0DC6929B7E43800FB6852 /* NavigationController.swift in Sources */,
 				DFF0DC6329B746C500FB6852 /* Socket.swift in Sources */,
 				DFF0DC5E29B746C500FB6852 /* Linker.swift in Sources */,
 				DFF0DC2629B7376D00FB6852 /* clove.xcdatamodeld in Sources */,
@@ -653,7 +685,7 @@
 				DEVELOPMENT_TEAM = 5W669BK4JQ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = clove/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Clove - Meet new people";
+				INFOPLIST_KEY_CFBundleDisplayName = Clove;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -687,7 +719,7 @@
 				DEVELOPMENT_TEAM = 5W669BK4JQ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = clove/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Clove - Meet new people";
+				INFOPLIST_KEY_CFBundleDisplayName = Clove;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

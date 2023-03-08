@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginViewController: ViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,12 +16,29 @@ class ViewController: UIViewController {
         
         Api.main.start { data, error in
             if let responseData = data {
-                let user = Response.User.decode(from: responseData)
-            }
-            if error != nil {
-                
+                let user = Response.Simple(responseData)
+                print(user.message!)
             }
         }
+        
+        Api.main.send { data, error in
+            if let response = data {
+                let message = Response.Message(response)
+                print(message.data!, message.status!)
+            }
+        }
+        
+        let button = ButtonXL("Open messages", action: #selector(openMessages))
+        button.setTitleColor(.white, for: .normal)
+        view.addSubview(button)
+        view.constrain(type: .horizontalCenter, button)
+        view.constrain(type: .verticalCenter, button)
+        
+    }
+    
+    @objc func openMessages() {
+        let messagerVC = MessagerViewController()
+        navigationController?.pushViewController(messagerVC, animated: true)
     }
 
 
