@@ -10,16 +10,19 @@ import UIKit
 class OwnMessageCell: UITableViewCell {
     
     var message: String!
-    var feedTime: UILabel!
+    var time: UIView!
+    var timeLabel: UILabel!
     var feedBody: UILabel!
     var container: UIView!
-    var tailView: TailView!
+    var tail: TailView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         feedBody = UILabel("", UIColor.white, .systemFont(ofSize: 16))
         feedBody.numberOfLines = 50
         self.backgroundColor = UIColor.clear
+        contentView.autoresizingMask = .flexibleHeight
+        autoresizingMask = .flexibleHeight
         
         container = UIView()
         container.layer.cornerRadius = 18
@@ -29,15 +32,38 @@ class OwnMessageCell: UITableViewCell {
         container.addConstraints(format: "H:|-12-[v0]-12-|", views: feedBody)
         container.addConstraints(format: "V:|-8-[v0]-8-|", views: feedBody)
         
-        contentView.addSubviews(views: container)
-        contentView.addConstraints(format: "H:|-(>=68)-[v0]-18-|", views: container)
-        contentView.addConstraints(format: "V:|-4-[v0]-(>=0)-|", views: container)
+        time = UIView()
+        timeLabel = UILabel("", .init(hex: 0x9D9D9D), .systemFont(ofSize: 12))
+        timeLabel.attributedText = NSMutableAttributedString().bold("Today, ", size: 12, weight: .bold).normal("9:13 am")
+        time.add().vertical(12).view(timeLabel, 14).end(12)
+        time.constrain(type: .horizontalCenter, timeLabel)
         
-        tailView = TailView(H: 32, W: 20)
-        contentView.add().horizontal(">=0").view(tailView, 20).end(18.25)
-        contentView.add().vertical(">=0").view(tailView, 32).end(-11.5)
+        contentView.bounds = CGRect(x: 0, y: 0, width: 99999.0, height: 99999.0)
+        contentView.add().vertical(42).view(container).end(0)
+        contentView.add().vertical(0).view(time).end(">=0")
+        contentView.add().horizontal(">=68").view(container).end(18)
+        contentView.constrain(type: .horizontalFill, time)
         
-        tailView.isHidden = true
+        tail = TailView(H: 32, W: 20, color: UIColor.primary)
+        contentView.add().horizontal(">=0").view(tail, 20).end(18.25)
+        contentView.add().vertical(">=0").view(tail, 32).end(-11.5)
+        
+        tail.isHidden = true
+    }
+    
+    func toggleTime(_ show: Bool) {
+        if show {
+            time.isHidden = false
+            for c in contentView.constraints where (c.firstItem as? UIView) == container && c.firstAttribute == .top {
+                c.constant = 42
+            }
+        }else {
+            time.isHidden = true
+            for c in contentView.constraints where (c.firstItem as? UIView) == container && c.firstAttribute == .top {
+                c.constant = 4
+            }
+        }
+        setNeedsUpdateConstraints()
     }
     
     func prepare(_ message: String) {
@@ -68,17 +94,4 @@ class OwnMessageCell: UITableViewCell {
         super.init(coder: coder)
     }
     
-    func expand() {
-        contentView.addSubview(feedTime)
-        contentView.addConstraints(format: "H:|-(>=0)-[v0]-24-|", views: feedTime)
-        contentView.addConstraints(format: "V:|-8-[v0]-4-[v1]-(>=0)-|", views: container, feedTime)
-    }
-    
-    func hideTail() {
-        tailView.isHidden = true
-    }
-    
-    func showTail() {
-        tailView.isHidden = false
-    }
 }

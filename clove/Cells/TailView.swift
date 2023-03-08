@@ -9,6 +9,8 @@ import UIKit
 
 class TailView: BaseView {
     
+    var color: UIColor!
+    
     override var oH: CGFloat {
         return 30
     }
@@ -19,6 +21,11 @@ class TailView: BaseView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    init(H: CGFloat, W: CGFloat, color: UIColor) {
+        super.init(H: H, W: W)
+        self.color = color
     }
     
     required init(H: CGFloat, W: CGFloat) {
@@ -35,7 +42,7 @@ class TailView: BaseView {
         path.addCurve(to: CGPoint(x: pX(12.5), y: pY(28)), controlPoint1: .init(x: pX(7.97712), y: pY(18.8532)), controlPoint2: .init(x: pX(11.6758), y: pY(24.7031)))
         path.addCurve(to: .init(x: pX(16), y: pY(28)), controlPoint1: .init(x: pX(13), y: pY(30)), controlPoint2: .init(x: pX(16), y: pY(30.3795)))
         
-        shapeLayer.fillColor = UIColor.primary.cgColor
+        shapeLayer.fillColor = color.cgColor
         shapeLayer.path = path.cgPath
     }
 }

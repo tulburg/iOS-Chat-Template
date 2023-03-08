@@ -22,9 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             controllers.dropFirst(1).forEach({ controller in
                 navigationController.pushViewController(controller, animated: false)
             })
-            if !(controllers[0] is UITabBarController) {
-                navigationController.hideTopBar()
-            }
+//            if !(controllers[0] is UITabBarController) {
+//                navigationController.hideTopBar()
+//            }
             window?.rootViewController = navigationController
             window?.becomeKey()
         }

@@ -27,6 +27,22 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         "This is not something i thought i will see today",
         "Wasn’t it something about you",
         "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today",
+        "Wasn’t it something about you",
+        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
         "Wasn’t it something about you"
     ]
 
@@ -113,20 +129,35 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
-    var messageCell: UITableViewCell!
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.row]
         if indexPath.row < 2 {
             let cell: OtherMessageCell = (tableView.dequeueReusableCell(withIdentifier: "other_message_cell") as? OtherMessageCell)!
             cell.prepare(message)
+            if indexPath.row == 0 {
+                cell.toggleTime(true)
+            }else {
+                cell.toggleTime(false)
+            }
+            if indexPath.row == 1 {
+                cell.tail.isHidden = false
+            }else {
+                cell.tail.isHidden = true
+            }
             return cell
         }
         let cell: OwnMessageCell = (tableView.dequeueReusableCell(withIdentifier: "own_message_cell") as? OwnMessageCell)!
         cell.prepare(message)
-        if indexPath.row == messages.count - 1 {
-            cell.showTail()
+        if indexPath.row == 2 {
+            cell.toggleTime(true)
         }else {
-            cell.hideTail()
+            cell.toggleTime(false)
+        }
+        if indexPath.row == messages.count - 1 {
+            cell.tail.isHidden = false
+        }else {
+            cell.tail.isHidden = true
         }
         return cell
     }
@@ -157,7 +188,19 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
     @objc func postComment() {
         if let body = messageField.text {
             messageField.resignFirstResponder()
-            print(body)
+            messages.append(body)
+            messageField.text = ""
+            messageFieldHeightConstraint.constant = 40
+            self.view.constraints.forEach({ constraint in
+                if constraint.firstAttribute == .height && (constraint.firstItem as? UIView) == messageContainer {
+                    constraint.constant = 40 + 12
+                }
+            })
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: { [self] in
+                tableView.reloadData()
+                tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
+            })
         }
     }
     
@@ -201,7 +244,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 72
+        tableView.estimatedRowHeight = 120
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.background
@@ -209,6 +252,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         tableView.register(OwnMessageCell.self, forCellReuseIdentifier: "own_message_cell")
         tableView.register(OtherMessageCell.self, forCellReuseIdentifier: "other_message_cell")
         tableView.allowsSelection = false
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
     }
     
     func buildMessageField() {

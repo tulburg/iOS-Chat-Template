@@ -16,8 +16,8 @@ class NavigationController: UINavigationController {
         super.init(rootViewController: rootViewController)
         self.view.backgroundColor = UIColor.background
         
-        self.navigationItem.backBarButtonItem?.tintColor = UIColor.primary
-        
+//        self.navigationItem.backBarButtonItem?.tintColor = UIColor.primary
+//
         appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.blackWhite]
@@ -26,12 +26,12 @@ class NavigationController: UINavigationController {
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 17),
             NSAttributedString.Key.foregroundColor: UIColor.blackWhite
         ]
-        self.navigationBar.standardAppearance = appearance
-        self.navigationBar.compactAppearance = appearance
-        self.navigationBar.scrollEdgeAppearance = appearance
-        self.navigationBar.prefersLargeTitles = false
-        self.navigationBar.tintColor = UIColor.blackWhite
-        self.navigationBar.isTranslucent = false
+//        self.navigationBar.standardAppearance = appearance
+//        self.navigationBar.compactAppearance = appearance
+//        self.navigationBar.scrollEdgeAppearance = appearance
+//        self.navigationBar.prefersLargeTitles = false
+//        self.navigationBar.tintColor = UIColor.blackWhite
+//        self.navigationBar.isTranslucent = false
         
     }
     
