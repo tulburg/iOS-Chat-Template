@@ -27,6 +27,14 @@ class DataType {
     class Basic: ResponseProtocol {
         required init(_ value: String) {}
     }
+    class Sent: ResponseProtocol {
+        var id: String?
+        var sent: Date?
+        required init(_ dict: NSDictionary) {
+            id = dict.string("id")
+            sent = dict.date("sent")
+        }
+    }
     class Message: ResponseProtocol {
         var id: String?
         var recipient: String?

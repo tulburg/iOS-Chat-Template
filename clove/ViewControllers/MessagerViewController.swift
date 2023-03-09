@@ -218,7 +218,9 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
                 constraint.constant = min(estimatedSize.height, 116) + 12
             }
         })
-        tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: false)
+        if self.messages.count > 0 {
+            tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: false)
+        }
         messageFieldHeightConstraint.constant = min(estimatedSize.height, 116)
         self.messageField.superview?.layoutIfNeeded()
     }

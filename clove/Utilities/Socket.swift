@@ -13,7 +13,7 @@ import CoreData
 class Socket {
     
     var socket: SocketIOClient!
-    var jobs: [(() -> Void)] = []
+    var queue: NSMutableDictionary = [:]
     var delegates: [SocketDelegate] = []
     
     static let shared: Socket = {
@@ -32,16 +32,28 @@ class Socket {
             socket.emit("login", [
                 "date": "27-12-1980"
             ])
-            jobs.forEach { $0() }
+            print("Reconnected! Retrying pendings...\(queue.count) pending")
+            self.queue.forEach {
+                print("Retrying for item at \($0.key)")
+                (($0.value as? (() -> Void))!)()
+            }
+            print("Queue reset!")
+            self.queue = [:]
         }
         socket.on(clientEvent: .disconnect) { data, ack in
         }
         
         socket.on(Constants.Events.Sent.rawValue){ data, ack in
+            print("Socket :: Message sent")
             guard let responseData = data[0] as? NSDictionary else { return }
-            let response = Response<DataType.Basic>(responseData)
+            let response = Response<DataType.Sent>(responseData)
             if response.code == 200 {
-                print("Got success")
+                self.queue.removeObject(forKey: (response.data?.sent?.toString())!)
+                print((response.data?.sent?.toString())!, self.queue.allKeys)
+                print("Socket :: Removing from queue, left \(self.queue.count)")
+                self.emit(Constants.Events.Sent.receipt(), [
+                    "id": (response.data?.id)!
+                ])
             }
         }
 
@@ -55,16 +67,17 @@ class Socket {
     // MARK: - Publish fuctions
     
     func sendMessage(_ message: Message) {
-        emit(Constants.Events.Sent.rawValue, [
+        print("Socket :: Sending message...")
+        let fn = { self.emit(Constants.Events.Sent.rawValue, [
+            "sent": message.sent?.toString(),
             "body": message.body,
             "recipient": message.recipient
-        ])
+        ]) }
+        queue.setValue({ fn() }, forKey: (message.sent?.toString())!)
+        fn()
     }
     
     func emit(_ event: String, _ data: [String: Any?]) {
-        jobs.append {
-            self.socket.emit(event, data)
-        }
         socket.emit(event, data)
         if socket.status != .connected {
             print("Socket not connected! Retrying...")
