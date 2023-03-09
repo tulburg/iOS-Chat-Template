@@ -16,15 +16,15 @@ class LoginViewController: ViewController {
         
         Api.main.start { data, error in
             if let responseData = data {
-                let user = Response.Simple(responseData)
+                let user = Response<DataType.Message>(responseData.json() as NSDictionary)
                 print(user.message!)
             }
         }
         
         Api.main.send { data, error in
             if let response = data {
-                let message = Response.Message(response)
-                print(message.data!, message.status!)
+                let message = Response<DataType.Message>(response.json() as NSDictionary)
+                print(message.data?.recipient, message.status!)
             }
         }
         

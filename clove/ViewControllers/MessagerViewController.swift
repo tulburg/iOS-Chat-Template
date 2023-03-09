@@ -23,29 +23,8 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
     
     var messageFieldHeight: CGFloat = 0
     
-    var messages: [String] = [
-        "This is not something i thought i will see today",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today",
-        "Wasn’t it something about you",
-        "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you",
-        "Wasn’t it something about you"
-    ]
-
+    var messages: [Message] = []
+    var recipient = "4893-58934-5893-4344"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,7 +62,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         let buttonImage = UIImage(systemName: "arrow.up.circle.fill")?.withTintColor(UIColor.primary, renderingMode: .alwaysOriginal)
         sendButton = UIImageView(image: buttonImage)
         sendButton.isUserInteractionEnabled = true
-        sendButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postComment)))
+        sendButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(send)))
         
         let messageWrap = UIView()
         messageWrap.layer.cornerRadius = 20
@@ -132,6 +111,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.row]
+//        (feedBody.text?.containsOnlyEmoji)! && (feedBody.text?.count)! <= 4
         if indexPath.row < 2 {
             let cell: OtherMessageCell = (tableView.dequeueReusableCell(withIdentifier: "other_message_cell") as? OtherMessageCell)!
             cell.prepare(message)
@@ -169,7 +149,9 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             }
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn, animations: {
                 self.view.layoutIfNeeded()
-                self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+                if self.messages.count > 0 {
+                    self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+                }
             }, completion: { _ in
                 
             })
@@ -185,10 +167,9 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         }, completion: nil)
     }
     
-    @objc func postComment() {
+    @objc func send() {
         if let body = messageField.text {
             messageField.resignFirstResponder()
-            messages.append(body)
             messageField.text = ""
             messageFieldHeightConstraint.constant = 40
             self.view.constraints.forEach({ constraint in
@@ -197,6 +178,15 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
                 }
             })
             
+            let message = Message(context: DB.shared.context)
+            message.body = body.trimmingCharacters(in: .whitespacesAndNewlines)
+            message.sent = Date()
+            message.sender = "89434-59305-5893-5783"
+            message.recipient = recipient
+            DB.shared.save()
+            messages.append(message)
+            Socket.shared.sendMessage(message)
+                
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: { [self] in
                 tableView.reloadData()
                 tableView.scrollToRow(at: IndexPath(row: messages.count - 1, section: 0), at: .bottom, animated: true)
@@ -268,7 +258,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
     
     // MARK: - Socket handlers
     
-    func socket(didReceive event: Constants.Events, data: Response.Message) {
+    func socket(didReceive event: Constants.Events, data: Response<DataType.Message>) {
         print("Received")
     }
 }

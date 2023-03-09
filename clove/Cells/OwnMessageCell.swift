@@ -9,12 +9,12 @@ import UIKit
 
 class OwnMessageCell: UITableViewCell {
     
-    var message: String!
     var time: UIView!
     var timeLabel: UILabel!
     var feedBody: UILabel!
     var container: UIView!
     var tail: TailView!
+    var status: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -47,13 +47,26 @@ class OwnMessageCell: UITableViewCell {
         tail = TailView(H: 32, W: 20, color: UIColor.primary)
         contentView.add().horizontal(">=0").view(tail, 20).end(18.25)
         contentView.add().vertical(">=0").view(tail, 32).end(-11.5)
-        
         tail.isHidden = true
+        
+        status = UILabel("Sent!", .init(hex: 0x9d9d9d), .systemFont(ofSize: 12, weight: .semibold))
+        contentView.add().horizontal(">=0").view(status).end(32)
+        contentView.add().vertical(">=0").view(status).end(-16)
+    }
+    
+    func toggleTail(_ show: Bool) {
+        if show {
+            tail.isHidden = false
+        }else {
+            tail.isHidden = true
+        }
     }
     
     func toggleTime(_ show: Bool) {
         if show {
-            time.isHidden = false
+            UIView.animate(withDuration: 0.2, animations: {
+                self.time.isHidden = false
+            })
             for c in contentView.constraints where (c.firstItem as? UIView) == container && c.firstAttribute == .top {
                 c.constant = 42
             }
@@ -66,9 +79,9 @@ class OwnMessageCell: UITableViewCell {
         setNeedsUpdateConstraints()
     }
     
-    func prepare(_ message: String) {
-        self.message = message
-        feedBody.text = message
+    func prepare(_ message: Message) {
+        feedBody.text = message.body
+        timeLabel.text = message.sent?.string(with: "hh:mm a").lowercased()
         if (feedBody.text?.containsOnlyEmoji)! && (feedBody.text?.count)! <= 4 {
             container.removeConstraints(container.constraints)
             container.addConstraints(format: "H:|-0-[v0]-0-|", views: feedBody)

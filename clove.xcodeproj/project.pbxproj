@@ -26,7 +26,7 @@
 		DFF0DC5E29B746C500FB6852 /* Linker.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5629B746C400FB6852 /* Linker.swift */; };
 		DFF0DC5F29B746C500FB6852 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5729B746C400FB6852 /* ImageCache.swift */; };
 		DFF0DC6029B746C500FB6852 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5829B746C500FB6852 /* Protocols.swift */; };
-		DFF0DC6129B746C500FB6852 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5929B746C500FB6852 /* Responses.swift */; };
+		DFF0DC6129B746C500FB6852 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5929B746C500FB6852 /* Response.swift */; };
 		DFF0DC6229B746C500FB6852 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5A29B746C500FB6852 /* Api.swift */; };
 		DFF0DC6329B746C500FB6852 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC5B29B746C500FB6852 /* Socket.swift */; };
 		DFF0DC6529B7DE1D00FB6852 /* MessagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFF0DC6429B7DE1D00FB6852 /* MessagerViewController.swift */; };
@@ -84,7 +84,7 @@
 		DFF0DC5629B746C400FB6852 /* Linker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Linker.swift; sourceTree = "<group>"; };
 		DFF0DC5729B746C400FB6852 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		DFF0DC5829B746C500FB6852 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		DFF0DC5929B746C500FB6852 /* Responses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
+		DFF0DC5929B746C500FB6852 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		DFF0DC5A29B746C500FB6852 /* Api.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		DFF0DC5B29B746C500FB6852 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 		DFF0DC6429B7DE1D00FB6852 /* MessagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagerViewController.swift; sourceTree = "<group>"; };
@@ -231,7 +231,7 @@
 				DFF0DC5729B746C400FB6852 /* ImageCache.swift */,
 				DFF0DC5629B746C400FB6852 /* Linker.swift */,
 				DFF0DC5829B746C500FB6852 /* Protocols.swift */,
-				DFF0DC5929B746C500FB6852 /* Responses.swift */,
+				DFF0DC5929B746C500FB6852 /* Response.swift */,
 				DFF0DC5B29B746C500FB6852 /* Socket.swift */,
 			);
 			path = Utilities;
@@ -504,7 +504,7 @@
 				DFF0DC2629B7376D00FB6852 /* clove.xcdatamodeld in Sources */,
 				DFF0DC5C29B746C500FB6852 /* Constants.swift in Sources */,
 				DFF0DC5D29B746C500FB6852 /* DB.swift in Sources */,
-				DFF0DC6129B746C500FB6852 /* Responses.swift in Sources */,
+				DFF0DC6129B746C500FB6852 /* Response.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

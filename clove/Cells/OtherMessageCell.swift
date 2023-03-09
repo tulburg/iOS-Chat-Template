@@ -9,7 +9,6 @@ import UIKit
 
 class OtherMessageCell: UITableViewCell {
     
-    var message: String = "This is not something i thought i will see today, i know i can’t escape, nothing good happens after two, its true. My bad habits leads to you"
     var feedBody: UILabel!
     var container: UIView!
     var time: UIView!
@@ -18,7 +17,7 @@ class OtherMessageCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        feedBody = UILabel(message, UIColor(hex: 0x323232), .systemFont(ofSize: 16))
+        feedBody = UILabel("", UIColor(hex: 0x323232), .systemFont(ofSize: 16))
         feedBody.numberOfLines = 50
         self.backgroundColor = UIColor.clear
         contentView.autoresizingMask = .flexibleHeight
@@ -54,12 +53,16 @@ class OtherMessageCell: UITableViewCell {
     
     func toggleTime(_ show: Bool) {
         if show {
-            time.isHidden = false
+            UIView.animate(withDuration: 0.2, animations: {
+                self.time.isHidden = false
+            })
             for c in contentView.constraints where (c.firstItem as? UIView) == container && c.firstAttribute == .top {
                 c.constant = 42
             }
         }else {
-            time.isHidden = true
+            UIView.animate(withDuration: 0.2, animations: {
+                self.time.isHidden = true
+            })
             for c in contentView.constraints where (c.firstItem as? UIView) == container && c.firstAttribute == .top {
                 c.constant = 4
             }
@@ -67,9 +70,9 @@ class OtherMessageCell: UITableViewCell {
         setNeedsUpdateConstraints()
     }
     
-    func prepare(_ message: String) {
-        self.message = message
-        feedBody.text = message
+    func prepare(_ message: Message) {
+        feedBody.text = message.body
+        timeLabel.text = message.sent?.string(with: "hh:mm a").lowercased()
         emojiCheck()
     }
     
