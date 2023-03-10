@@ -25,11 +25,16 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
     
     var messages: [Message] = []
     var recipient = "4893-58934-5893-4344"
+    var sender = "89434-59305-5893-5783"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Broadcast"
+        if let messages = DB.fetchMessages(recipient: recipient, sender: sender) {
+            self.messages = messages
+        }
+        
         
         self.navigationItem.backBarButtonItem?.setBackButtonBackgroundVerticalPositionAdjustment(20, for: .default)
         
@@ -103,43 +108,75 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: .none)
         
         Socket.shared.unregisterDelegate(self)
+        tableView.scrollToRow(at: IndexPath.init(row: messages.count - 1, section: 0), at: .bottom, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
     
+    var lastMessage: Message?
+    var nextMessage: Message?
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.row]
-//        (feedBody.text?.containsOnlyEmoji)! && (feedBody.text?.count)! <= 4
-        if indexPath.row < 2 {
-            let cell: OtherMessageCell = (tableView.dequeueReusableCell(withIdentifier: "other_message_cell") as? OtherMessageCell)!
-            cell.prepare(message)
-            if indexPath.row == 0 {
-                cell.toggleTime(true)
-            }else {
-                cell.toggleTime(false)
-            }
-            if indexPath.row == 1 {
-                cell.tail.isHidden = false
-            }else {
-                cell.tail.isHidden = true
-            }
-            return cell
+        if indexPath.row < messages.count - 1 {
+            nextMessage = messages[indexPath.row + 1]
         }
-        let cell: OwnMessageCell = (tableView.dequeueReusableCell(withIdentifier: "own_message_cell") as? OwnMessageCell)!
-        cell.prepare(message)
-        if indexPath.row == 2 {
-            cell.toggleTime(true)
+        if indexPath.row > 1 {
+            lastMessage = messages[indexPath.row - 1]
+        }
+        var cell: MessageCellProtocol!
+        if message.sender! == recipient {
+            cell = tableView.dequeueReusableCell(withIdentifier: "other_message_cell") as? OtherMessageCell
+            cell.prepare(message: message)
+            cell.toggleTime(show: indexPath.row == 0)
+            
+            var backTimeDiff: Double = 0
+            var nextTimeDiff: Double = 0
+            if lastMessage != nil {
+                backTimeDiff = (message.sent?.timeIntervalSince1970)! - (lastMessage?.sent?.timeIntervalSince1970)!
+            }
+            if nextMessage != nil {
+                nextTimeDiff = (nextMessage?.sent?.timeIntervalSince1970)! - (message.sent?.timeIntervalSince1970)!
+            }
+            cell.toggleTail(show: (!(message.body!.containsOnlyEmoji && (message.body?.count)! <= 4))
+                            && nextTimeDiff > 120)
+            cell.toggleTime(show: backTimeDiff > 120)
+            cell.toggleStatus(show: nextTimeDiff > 120)
+            
+            
         }else {
-            cell.toggleTime(false)
+            cell = tableView.dequeueReusableCell(withIdentifier: "own_message_cell") as? OwnMessageCell
+            cell.prepare(message: message)
+            cell.toggleTime(show: indexPath.row == 2)
+            var backTimeDiff: Double = 0
+            var nextTimeDiff: Double = 0
+            if lastMessage != nil {
+                backTimeDiff = (message.sent?.timeIntervalSince1970)! - (lastMessage?.sent?.timeIntervalSince1970)!
+            }
+            if nextMessage != nil {
+                nextTimeDiff = (nextMessage?.sent?.timeIntervalSince1970)! - (message.sent?.timeIntervalSince1970)!
+            }
+
+            cell.toggleTail(show: nextTimeDiff > 120)
+            cell.toggleTime(show: backTimeDiff > 120)
+            cell.toggleStatus(show: nextTimeDiff > 120)
+
+        }
+        if nextMessage != nil && nextMessage?.sender != message.sender {
+            cell.toggleTail(show: true)
+            cell.toggleStatus(show: true)
         }
         if indexPath.row == messages.count - 1 {
-            cell.tail.isHidden = false
-        }else {
-            cell.tail.isHidden = true
+            cell.toggleTail(show: true)
         }
-        return cell
+        
+        if message.body!.containsOnlyEmoji && (message.body?.count)! <= 4 {
+            cell.toggleTail(show: false)
+        }
+        
+        lastMessage = message
+        return cell as! UITableViewCell
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -181,7 +218,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             let message = Message(context: DB.shared.context)
             message.body = body.trimmingCharacters(in: .whitespacesAndNewlines)
             message.sent = Date()
-            message.sender = "89434-59305-5893-5783"
+            message.sender = sender
             message.recipient = recipient
             DB.shared.save()
             messages.append(message)
@@ -261,6 +298,10 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
     // MARK: - Socket handlers
     
     func socket(didReceive event: Constants.Events, data: Response<DataType.Message>) {
-        print("Received")
+        if let messages = DB.fetchMessages(recipient: recipient, sender: sender) {
+            self.messages = messages
+            tableView.reloadData()
+            tableView.scrollToRow(at: IndexPath(item: messages.count - 1, section: 0), at: .bottom, animated: true)
+        }
     }
 }

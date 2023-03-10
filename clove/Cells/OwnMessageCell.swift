@@ -7,19 +7,19 @@
 
 import UIKit
 
-class OwnMessageCell: UITableViewCell {
+class OwnMessageCell: UITableViewCell, MessageCellProtocol {
     
     var time: UIView!
     var timeLabel: UILabel!
-    var feedBody: UILabel!
+    var body: UILabel!
     var container: UIView!
     var tail: TailView!
     var status: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        feedBody = UILabel("", UIColor.white, .systemFont(ofSize: 16))
-        feedBody.numberOfLines = 50
+        body = UILabel("", UIColor.white, .systemFont(ofSize: 16))
+        body.numberOfLines = 50
         self.backgroundColor = UIColor.clear
         contentView.autoresizingMask = .flexibleHeight
         autoresizingMask = .flexibleHeight
@@ -28,9 +28,9 @@ class OwnMessageCell: UITableViewCell {
         container.layer.cornerRadius = 18
         container.layer.cornerCurve = .continuous
         container.backgroundColor = UIColor.primary
-        container.addSubviews(views: feedBody)
-        container.addConstraints(format: "H:|-12-[v0]-12-|", views: feedBody)
-        container.addConstraints(format: "V:|-8-[v0]-8-|", views: feedBody)
+        container.addSubviews(views: body)
+        container.addConstraints(format: "H:|-12-[v0]-12-|", views: body)
+        container.addConstraints(format: "V:|-8-[v0]-8-|", views: body)
         
         time = UIView()
         timeLabel = UILabel("", .init(hex: 0x9D9D9D), .systemFont(ofSize: 12))
@@ -54,7 +54,7 @@ class OwnMessageCell: UITableViewCell {
         contentView.add().vertical(">=0").view(status).end(-16)
     }
     
-    func toggleTail(_ show: Bool) {
+    func toggleTail(show: Bool) {
         if show {
             tail.isHidden = false
         }else {
@@ -62,7 +62,7 @@ class OwnMessageCell: UITableViewCell {
         }
     }
     
-    func toggleTime(_ show: Bool) {
+    func toggleTime(show: Bool) {
         if show {
             UIView.animate(withDuration: 0.2, animations: {
                 self.time.isHidden = false
@@ -79,27 +79,35 @@ class OwnMessageCell: UITableViewCell {
         setNeedsUpdateConstraints()
     }
     
-    func prepare(_ message: Message) {
-        feedBody.text = message.body
+    func toggleStatus(show: Bool) {
+        if show {
+            status.isHidden = false
+        }else {
+            status.isHidden = true
+        }
+    }
+    
+    func prepare(message: Message) {
+        body.text = message.body
         timeLabel.text = message.sent?.string(with: "hh:mm a").lowercased()
-        if (feedBody.text?.containsOnlyEmoji)! && (feedBody.text?.count)! <= 4 {
+        if (body.text?.containsOnlyEmoji)! && (body.text?.count)! <= 4 {
             container.removeConstraints(container.constraints)
-            container.addConstraints(format: "H:|-0-[v0]-0-|", views: feedBody)
-            container.addConstraints(format: "V:|-0-[v0]-0-|", views: feedBody)
+            container.addConstraints(format: "H:|-0-[v0]-0-|", views: body)
+            container.addConstraints(format: "V:|-0-[v0]-0-|", views: body)
             container.layoutIfNeeded()
-            if feedBody.text!.count <= 2 {
-                feedBody.font = UIFont.systemFont(ofSize: 60)
+            if body.text!.count <= 2 {
+                body.font = UIFont.systemFont(ofSize: 60)
             } else {
-                feedBody.font = UIFont.systemFont(ofSize: 48)
+                body.font = UIFont.systemFont(ofSize: 48)
             }
             container.backgroundColor = UIColor.clear
         } else {
             container.removeConstraints(container.constraints)
-            container.addConstraints(format: "H:|-12-[v0]-12-|", views: feedBody)
-            container.addConstraints(format: "V:|-8-[v0]-8-|", views: feedBody)
+            container.addConstraints(format: "H:|-12-[v0]-12-|", views: body)
+            container.addConstraints(format: "V:|-8-[v0]-8-|", views: body)
             container.layoutIfNeeded()
             container.backgroundColor = UIColor.primary
-            feedBody.font = UIFont.systemFont(ofSize: 16)
+            body.font = UIFont.systemFont(ofSize: 16)
         }
     }
     

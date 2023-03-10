@@ -77,7 +77,7 @@ class BaseView: UIView {
         
         clipsToBounds = true
         layer.addSublayer(shapeLayer)
-        shapeLayer.fillColor = UIColor.brown.cgColor
+        shapeLayer.fillColor = UIColor.red.cgColor
     }
     
     

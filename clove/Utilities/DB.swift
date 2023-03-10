@@ -18,10 +18,12 @@ class DB: NSObject {
     }()
     
     enum Model: String {
-        case User, Broadcast, Comment
+        case Message, Broadcast, Comment
     }
     
-    let ModelClass: Dictionary<Model, AnyClass> = [:]
+    let ModelClass: Dictionary<Model, AnyClass> = [
+        .Message: Message.self
+    ]
     
     let context : NSManagedObjectContext!
     
@@ -31,6 +33,11 @@ class DB: NSObject {
     
     // MARK: - Static global calls
     
+    static func fetchMessages(recipient: String, sender: String) -> [Message]? {
+        let predicate = NSPredicate(format: "(sender = %@ AND recipient = %@) OR (sender = %@ AND recipient = %@)", sender, recipient, recipient, sender)
+        let messages = DB.shared.find(.Message, predicate: predicate)
+        return messages as? [Message]
+    }
     
     
     // MARK: - Base functions

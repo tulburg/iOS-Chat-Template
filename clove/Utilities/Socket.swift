@@ -48,12 +48,38 @@ class Socket {
             guard let responseData = data[0] as? NSDictionary else { return }
             let response = Response<DataType.Sent>(responseData)
             if response.code == 200 {
+                print("=== ", response.data?.sent, response.data?.id)
                 self.queue.removeObject(forKey: (response.data?.sent?.toString())!)
-                print((response.data?.sent?.toString())!, self.queue.allKeys)
                 print("Socket :: Removing from queue, left \(self.queue.count)")
                 self.emit(Constants.Events.Sent.receipt(), [
                     "id": (response.data?.id)!
                 ])
+            }
+        }
+        
+        socket.on(Constants.Events.Message.rawValue) { data, ack in
+            print("Socket :: Message Received")
+            guard let responseData = data[0] as? NSDictionary else { return }
+            let response = Response<DataType.Message>(responseData)
+            if response.code == 200 {
+                let message = Message(context: DB.shared.context)
+                message.sent = response.data?.sent
+                message.id = response.data?.id
+                message.recipient = response.data?.recipient
+                message.body = response.data?.body
+                message.sender = response.data?.sender
+                DB.shared.save()
+                let fn = {
+                    self.emit(Constants.Events.Message.receipt(), [
+                        "id": (response.data?.id)!
+                    ])
+                    self.emit(Constants.Events.Delivered.rawValue, [
+                        "id": (response.data?.id)!
+                    ])
+                }
+                self.queue.setValue({ fn() }, forKey: (message.sent?.toString())!)
+                fn()
+                self.delegates.forEach{ $0.socket(didReceive: .Message, data: response) }
             }
         }
 

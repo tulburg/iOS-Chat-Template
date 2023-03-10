@@ -13,6 +13,7 @@ struct Constants {
     
     enum Events: String {
         case Sent = "sent"
+        case Message = "message"
         case Delivered = "delivered"
         
         func receipt() -> String {

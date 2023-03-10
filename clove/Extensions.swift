@@ -497,6 +497,8 @@ extension UIColor {
     
     static let accent = UIColor(hex: 0x784AC2)
     static let primary = UIColor(hex: 0x2E466B)
+    static let awayMessageBackground = UIColor.create(0xf1f1f1, dark: 0x303030)
+    static let awayMessageText = UIColor.create(0x373737, dark: 0xF0F0F0)
     
     static let background = create(0xFFFFFF, dark: 0x101010)
     static let darkBackground = create(0xf5f5f5, dark: 0x252525)
