@@ -39,6 +39,10 @@ class DB: NSObject {
         return messages as? [Message]
     }
     
+    @discardableResult static func updateMessageStatus(_ status: String, id: String) -> Bool {
+        return DB.shared.update(.Message, predicate: NSPredicate(format: "id = %@", id as CVarArg), keyValue: ["status": status])
+    }
+    
     
     // MARK: - Base functions
     

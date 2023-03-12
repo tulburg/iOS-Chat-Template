@@ -27,15 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        manager = SocketManager(socketURL: URL(string: Constants.Base)!, config: [.log(false), .compress, .extraHeaders([
-            "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImlzcyI6Ingtd2VhdmUtcHJvdG9jb2wifQ.eyJpZCI6Ijg5NDM0LTU5MzA1LTU4OTMtNTc4MyIsImlhdCI6MTUxNjIzOTAyMiwiaXNzIjoieC13ZWF2ZS1wcm90b2NvbCJ9.p1fmRWsCNZkcN0g_KPBQDLohCwRnAj76VVhzMjTjapM"
-        ])])
-        
-//        if let token = UserDefaults.standard.string(forKey: Constants.authToken) {
-//            manager = SocketManager(socketURL: URL(string: Constants.Base)!, config: [.log(false), .compress, .extraHeaders([
-//                "authorization": "Bearer \(token)"
-//            ])])
-//        }
+        if let token = UserDefaults.standard.string(forKey: Constants.authToken) {
+            manager = SocketManager(socketURL: URL(string: Constants.Base)!, config: [.log(false), .compress, .extraHeaders([
+                "authorization": "Bearer \(token)"
+            ])])
+        }
         socket = self.manager?.defaultSocket
     }
 

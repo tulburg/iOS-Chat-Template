@@ -20,6 +20,10 @@ struct Constants {
             return self.rawValue + ":receipt"
         }
     }
+    enum Status: String {
+        case Sent = "Sent"
+        case Delivered = "Delivered"
+    }
     static let authToken = "auth-token"
     static let S3Addr = "https://tq-imagecache-sn.s3.amazonaws.com/"
 }

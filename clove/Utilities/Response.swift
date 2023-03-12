@@ -35,6 +35,20 @@ class DataType {
             sent = dict.date("sent")
         }
     }
+    class Delivered: ResponseProtocol {
+        var id: String?
+        required init(_ dict: NSDictionary) {
+            id = dict.string("id")
+        }
+    }
+    class Login: ResponseProtocol {
+        var token: String?
+        var id: String?
+        required init(_ dict: NSDictionary) {
+            token = dict.string("token")
+            id = dict.string("id")
+        }
+    }
     class Message: ResponseProtocol {
         var id: String?
         var recipient: String?

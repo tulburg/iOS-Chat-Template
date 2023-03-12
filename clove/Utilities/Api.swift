@@ -31,8 +31,9 @@ class Api {
         execute(.POST, completion)
     }
     
-    func send(_ completion: ((_ data: Data?, _ error: Error?) -> Void)?) {
-        path = "/send"
+    func login(username: String, _ completion: ((_ data: Data?, _ error: Error?) -> Void)?) {
+        path = "/login"
+        parameters = ["username": username]
         execute(.POST, completion)
     }
     
