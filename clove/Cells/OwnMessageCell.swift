@@ -76,6 +76,9 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
         
         tail = TailView(H: 32, W: 20, color: UIColor.primary)
         
+        if showEmoji {
+            status.isHidden = true
+        }
         
         if showTail {
             container.add().horizontal(">=0").view(tail, 20).end(0)

@@ -16,6 +16,7 @@ class OtherMessageCell: UITableViewCell, MessageCellProtocol {
     var timeLabel: UILabel!
     var tail: TailView!
     var showEmoji: Bool!
+    var image: UIImageView!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,6 +27,9 @@ class OtherMessageCell: UITableViewCell, MessageCellProtocol {
         autoresizingMask = .flexibleHeight
         let frame = contentView.frame
         contentView.bounds = CGRect(x: 0, y: 0, width: 99999.0, height: 99999.0)
+        image = UIImageView()
+        image.layer.cornerRadius = 16
+        image.clipsToBounds = true
         
         container = UIView()
         container.layer.cornerRadius = 18
@@ -33,6 +37,8 @@ class OtherMessageCell: UITableViewCell, MessageCellProtocol {
         container.backgroundColor = UIColor.awayMessageBackground
         container.addSubviews(views: body)
         container.addConstraints(format: "H:|-12-[v0]-12-|", views: body)
+
+        
         
         time = UIView()
         timeLabel = UILabel("", .init(hex: 0x9D9D9D), .systemFont(ofSize: 12))
@@ -45,7 +51,7 @@ class OtherMessageCell: UITableViewCell, MessageCellProtocol {
         if showEmoji {
             container.removeConstraints(container.constraints)
             container.addConstraints(format: "V:|-0-[v0]-0-|", views: body)
-            container.addConstraints(format: "H:|-4-[v0]-4-|", views: body)
+            container.addConstraints(format: "H:|-0-[v0]-0-|", views: body)
             container.backgroundColor = UIColor.clear
         }else {
             container.backgroundColor = UIColor.awayMessageBackground
@@ -64,24 +70,32 @@ class OtherMessageCell: UITableViewCell, MessageCellProtocol {
         }else {
             contentView.add().vertical(2).view(container).end(showStatus ? 8 : 0)
         }
-        contentView.add().horizontal(16).view(container).end(">=\(0.22 * frame.width)")
+        contentView.add().horizontal(16).view(image, 32).gap(12).view(container).end(">=\(0.22 * frame.width)")
+        contentView.add().vertical(">=0").view(image, 32).end(showTime ? -4 : 4)
             
         tail = TailView(H: 32, W: 20, color: UIColor.awayMessageBackground)
         if showTail {
             tail.transform = .init(scaleX: -1, y: 1)
             container.add().horizontal(0).view(tail, 20).end(">=0")
             container.add().vertical(">=0").view(tail, 32).end(-11.5)
+            image.isHidden = false
         }else {
             tail.isHidden = true
             container.removeConstraints(contentView.constraints.filter { ($0.firstItem as? UIView) == tail })
+            image.isHidden = true
         }
-        
     }
 
     
     func prepare(message: Message) {
         body.text = message.body
         timeLabel.attributedText = getTime(message)
+        var imageUrl = [
+            "89434-59305-5893-5783": "https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?w=360",
+            "4893-58934-5893-4344": "https://www.microsoft.com/en-us/research/uploads/prod/2022/10/adam-square.jpg"
+        ]
+        image.download(link: imageUrl[message.recipient!]!, contentMode: .scaleAspectFill)
+        print(imageUrl[message.recipient!]!)
         if showEmoji {
             if body.text!.count <= 2 {
                 body.font = UIFont.systemFont(ofSize: 60)
