@@ -15,6 +15,7 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
     var container: UIView!
     var tail: TailView!
     var status: UILabel!
+    var showEmoji: Bool!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -31,39 +32,45 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
         container.layer.cornerCurve = .continuous
         container.backgroundColor = UIColor.primary
         container.addSubviews(views: body)
-        container.addConstraints(format: "H:|-12-[v0]-12-|", views: body)
-        container.addConstraints(format: "V:|-8-[v0]-8-|", views: body)
         
         time = UIView()
         timeLabel = UILabel("", .init(hex: 0x9D9D9D), .systemFont(ofSize: 12))
         
-        let showEmoji = reuseIdentifier!.contains("_emoji")
+        showEmoji = reuseIdentifier!.contains("_emoji")
         let showTime = reuseIdentifier!.contains("_time")
         let showTail = reuseIdentifier!.contains("_tail")
         let showStatus = reuseIdentifier!.contains("_status")
         
         if showEmoji {
-            if body.text!.count <= 2 {
-                body.font = UIFont.systemFont(ofSize: 60)
-            } else {
-                body.font = UIFont.systemFont(ofSize: 48)
-            }
+            container.removeConstraints(container.constraints)
+            container.addConstraints(format: "V:|-0-[v0]-0-|", views: body)
+            container.addConstraints(format: "H:|-(>=4)-[v0]-4-|", views: body)
             container.backgroundColor = UIColor.clear
         }else {
             body.font = UIFont.systemFont(ofSize: 16)
             container.backgroundColor = .primary
+            container.removeConstraints(container.constraints)
+            container.addConstraints(format: "V:|-8-[v0]-8-|", views: body)
+            container.addConstraints(format: "H:|-12-[v0]-12-|", views: body)
+        }
+        
+        status = UILabel("Sent!", .init(hex: 0x9d9d9d), .systemFont(ofSize: 12, weight: .regular))
+        
+        if showStatus {
+            contentView.add().horizontal(">=0").view(status).end(28)
+            contentView.add().vertical(">=0").view(status).end(16)
         }
         
         if showTime {
             contentView.add().vertical(38).view(container).end(0)
             timeLabel.attributedText = NSMutableAttributedString().bold("Today, ", size: 12, weight: .bold).normal("9:13 am")
             time.add().vertical(16).view(timeLabel, 14).end(8)
-            time.add().horizontal(">=0").view(timeLabel).end(24)
+            time.constrain(type: .horizontalCenter, timeLabel)
             
-            contentView.add().vertical(0).view(time).end(">=0")
+            contentView.add().vertical(0).view(time).end(">=\(showStatus ? 32 : 0)")
             contentView.constrain(type: .horizontalFill, time)
         }else {
-            contentView.add().vertical(2).view(container).end(0)
+            contentView.add().vertical(2).view(container).end(showStatus ? 32 : 0)
         }
         contentView.add().horizontal(">=\(0.2 * frame.width)").view(container).end(16)
         
@@ -71,49 +78,29 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
         
         
         if showTail {
-            contentView.add().horizontal(">=0").view(tail, 20).end(16.25)
-            contentView.add().vertical(">=0").view(tail, 32).end(-11.5)
+            container.add().horizontal(">=0").view(tail, 20).end(0)
+            container.add().vertical(">=0").view(tail, 32).end(-11.5)
         }else {
             tail.isHidden = true
-            contentView.removeConstraints(contentView.constraints.filter { ($0.firstItem as? UIView) == tail })
-        }
-        
-        
-        status = UILabel("Sent!", .init(hex: 0x9d9d9d), .systemFont(ofSize: 12, weight: .regular))
-        
-        if showStatus {
-            contentView.add().horizontal(">=0").view(status).end(32)
-            contentView.add().vertical(">=0").view(status).end(-20)
+            container.removeConstraints(contentView.constraints.filter { ($0.firstItem as? UIView) == tail })
         }
         
     }
     
     func prepare(message: Message) {
         body.text = message.body
-        if let statusText = message.status {
-            status.text = statusText
-        }else {
-            status.text = "Sending..."
-        }
-        timeLabel.text = message.sent?.string(with: "hh:mm a").lowercased()
-        if (body.text?.containsOnlyEmoji)! && (body.text?.count)! <= 4 {
-            container.removeConstraints(container.constraints)
-            container.addConstraints(format: "H:|-0-[v0]-0-|", views: body)
-            container.addConstraints(format: "V:|-0-[v0]-0-|", views: body)
-            container.layoutIfNeeded()
+        timeLabel.attributedText = getTime(message)
+        if showEmoji {
             if body.text!.count <= 2 {
                 body.font = UIFont.systemFont(ofSize: 60)
             } else {
                 body.font = UIFont.systemFont(ofSize: 48)
             }
-            container.backgroundColor = UIColor.clear
-        } else {
-            container.removeConstraints(container.constraints)
-            container.addConstraints(format: "H:|-12-[v0]-12-|", views: body)
-            container.addConstraints(format: "V:|-8-[v0]-8-|", views: body)
-            container.layoutIfNeeded()
-            container.backgroundColor = UIColor.primary
-            body.font = UIFont.systemFont(ofSize: 16)
+        }
+        if let statusText = message.status {
+            status.text = statusText
+        }else {
+            status.text = "Sending..."
         }
     }
     

@@ -529,6 +529,18 @@ extension Date {
         Int64((self.timeIntervalSince1970 * 1000.0).rounded())
     }
     
+    func get(_ components: Calendar.Component..., calendar: Calendar = Calendar.current) -> DateComponents {
+        return (calendar.locale?.calendar.dateComponents(Set(components), from: self))!
+    }
+    
+    func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
+        return (calendar.locale?.calendar.component(component, from: self))!
+    }
+    
+    func set(_ component: Calendar.Component, value: Int, calendar: Calendar = Calendar.current) -> Date {
+        return (calendar.locale?.calendar.date(bySetting: component, value: value, of: self))!
+    }
+    
     static func from(string: String) -> Date? {
         return self.from(string: string, with: "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX")
     }

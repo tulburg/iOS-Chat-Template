@@ -148,7 +148,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
                 && nextTimeDiff > 120 {
                 showTail = true
             }
-            if (backTimeDiff > 120) { showTime = true }
+            if (backTimeDiff > 60 * 24) { showTime = true }
             if (nextTimeDiff > 120) { showStatus = true }
             
             
@@ -164,7 +164,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             }
             
             if (nextTimeDiff > 120) { showTail = true }
-            if (backTimeDiff > 120) { showTime = true }
+            if (backTimeDiff > 60 * 24) { showTime = true }
             if (nextTimeDiff > 120) { showStatus = true }
         }
         
@@ -172,9 +172,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             showTail = true
             showStatus = true
         }
-        if lastMessage != nil && lastMessage?.sender != message.sender {
-            showTime = true
-        }
+
         if indexPath.row == messages.count - 1 {
             showTail = true
             showStatus = true
@@ -185,8 +183,12 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             showTail = false
         }
         
-        if showStatus && nextMessage?.sender == message.sender {
-            showStatus = false
+//        if showStatus && nextMessage?.sender == message.sender {
+//            showStatus = false
+//        }
+        
+        if indexPath.row == 0 {
+            showTime = true
         }
         
         if showTail { id.append("_tail") }
