@@ -16,6 +16,7 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
     var tail: TailView!
     var status: UILabel!
     var showEmoji: Bool!
+    var timeIndicator: UILabel!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,9 +33,13 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
         container.layer.cornerCurve = .continuous
         container.backgroundColor = UIColor.primary
         container.addSubviews(views: body)
+        container.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showTime)))
         
         time = UIView()
         timeLabel = UILabel("", .init(hex: 0x9D9D9D), .systemFont(ofSize: 12))
+        
+        timeIndicator = UILabel("", .init(hex: 0x9D9D9D), .systemFont(ofSize: 12))
+        timeIndicator.isHidden = true
         
         showEmoji = reuseIdentifier!.contains("_emoji")
         let showTime = reuseIdentifier!.contains("_time")
@@ -62,7 +67,7 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
         }
         
         if showTime {
-            contentView.add().vertical(38).view(container).end(0)
+            contentView.add().vertical(38).view(container).end(">=\(showStatus ? 32 : 0)")
             timeLabel.attributedText = NSMutableAttributedString().bold("Today, ", size: 12, weight: .bold).normal("9:13 am")
             time.add().vertical(16).view(timeLabel, 14).end(8)
             time.constrain(type: .horizontalCenter, timeLabel)
@@ -72,12 +77,17 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
         }else {
             contentView.add().vertical(2).view(container).end(showStatus ? 32 : 0)
         }
-        contentView.add().horizontal(">=\(0.2 * frame.width)").view(container).end(16)
+        contentView.add().horizontal(">=\(0.25 * frame.width)").view(container).end(16)
+        
+        contentView.add().view(timeIndicator).view(container).end(16)
+        container.centerYAnchor.constraint(equalTo: timeIndicator.centerYAnchor).isActive = true
         
         tail = TailView(H: 32, W: 20, color: UIColor.primary)
         
         if showEmoji {
             status.isHidden = true
+        }else {
+            status.isHidden = false
         }
         
         if showTail {
@@ -93,6 +103,7 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
     func prepare(message: Message) {
         body.text = message.body
         timeLabel.attributedText = getTime(message)
+        timeIndicator.text = getMiniTime(message)
         if showEmoji {
             if body.text!.count <= 2 {
                 body.font = UIFont.systemFont(ofSize: 60)
@@ -105,6 +116,13 @@ class OwnMessageCell: UITableViewCell, MessageCellProtocol {
         }else {
             status.text = "Sending..."
         }
+    }
+    
+    @objc func showTime() {
+        timeIndicator.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: {
+            self.timeIndicator.isHidden = true
+        })
     }
     
     required init?(coder: NSCoder) {

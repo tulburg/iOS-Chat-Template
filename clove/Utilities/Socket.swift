@@ -13,7 +13,6 @@ import CoreData
 class Socket {
     
     var socket: SocketIOClient!
-    var queue: NSMutableDictionary = [:]
     var messageQueue: NSMutableDictionary = [:]
     var delegates: [SocketDelegate] = []
     
@@ -33,13 +32,18 @@ class Socket {
             socket.emit("login", [
                 "date": "27-12-1980"
             ])
-            print("Reconnected! Retrying pendings...\(queue.count) pending")
-            self.queue.forEach {
-                print("Retrying for item at \($0.key)")
-                (($0.value as? (() -> Void))!)()
+            let pendingEvents: [Event] = DB.shared.find(.Event, predicate: nil) as! [Event]
+            print("Reconnected! Retrying pendings...\(pendingEvents.count) pending")
+            pendingEvents.forEach { event in
+                if event.name != nil {
+                    print("Retrying for item at \(event.name!):: \(event.id!)")
+                    socket.emit(event.name!, (event.data?.data(using: .utf8)?.json())!)
+                    if event.name!.contains("receipt") {
+                        DB.shared.delete(.Event, predicate: NSPredicate(format: "id = %@", event.id!))
+                    }
+                }
             }
             print("Queue reset!")
-            self.queue = [:]
         }
         socket.on(clientEvent: .disconnect) { data, ack in
         }
@@ -50,14 +54,18 @@ class Socket {
             let response = Response<DataType.Sent>(responseData)
             if response.code == 200 {
                 let itemKey = (response.data?.sent?.toString())!
-                self.queue.removeObject(forKey: itemKey)
-                print("Socket :: Removing from queue, left \(self.queue.count)")
-                let fn = {
-                    self.emit(Constants.Events.Sent.receipt(), [
-                        "id": (response.data?.id)!
-                    ])
-                }
-                if let message: Message = self.messageQueue.value(forKey: itemKey) as? Message {
+                self.removeEvent(id: itemKey)
+                let data = [
+                    "id": (response.data?.id)!
+                ]
+                let eventKey = "\((response.data?.id)!)::Sent"
+                self.emit(Constants.Events.Sent.receipt(), data)
+                self.registerEvent(Constants.Events.Sent.receipt(), eventKey, data)
+                
+                
+                let messages = DB.shared.find(.Message, predicate: NSPredicate(format: "tmpid = %@", (response.data?.tmpid)! as CVarArg)) as! [Message]
+                if messages.count > 0 {
+                    let message = messages[0]
                     message.id = (response.data?.id)!
                     message.status = Constants.Status.Sent.rawValue
                     DB.shared.save()
@@ -68,8 +76,7 @@ class Socket {
                     print("Socket :: Error while updating message status")
                     print(responseData)
                 }
-                self.queue.setValue({ fn() }, forKey:  "\((response.data?.id)!)::Sent")
-                fn()
+                
             }
         }
         
@@ -78,7 +85,7 @@ class Socket {
             let response = Response<DataType.Sent>(responseData)
             if response.code == 200 {
                 let itemKey = "\((response.data?.id)!)::Sent"
-                self.queue.removeObject(forKey: itemKey)
+                self.removeEvent(id: itemKey)
             }
         }
         
@@ -94,14 +101,15 @@ class Socket {
                 message.body = response.data?.body
                 message.sender = response.data?.sender
                 DB.shared.save()
-                let fn = {
-                    self.emit(Constants.Events.Message.receipt(), [
-                        "sender": (response.data?.sender)!,
-                        "id": (response.data?.id)!
-                    ])
-                }
-                self.queue.setValue({ fn() }, forKey: "\((response.data?.id)!)::Received")
-                fn()
+                let itemKey = "\((response.data?.id)!)::Received"
+                let data = [
+                    "sender": (response.data?.sender)!,
+                    "id": (response.data?.id)!
+                ]
+                
+                self.emit(Constants.Events.Message.receipt(), data)
+                self.registerEvent(Constants.Events.Message.receipt(), itemKey, data)
+                
                 self.delegates.forEach{ $0.socket(didReceive: .Message, data: response) }
             }
         }
@@ -111,7 +119,7 @@ class Socket {
             let response = Response<DataType.Message>(responseData)
             if response.code == 200 {
                 let itemKey = "\((response.data?.id)!)::Received"
-                self.queue.removeObject(forKey: itemKey)
+                self.removeEvent(id: itemKey)
             }
         }
         
@@ -120,18 +128,18 @@ class Socket {
             guard let responseData = data[0] as? NSDictionary else { return }
             let response = Response<DataType.Delivered>(responseData)
             if response.code == 200 {
-                let fn = {
-                    self.emit(Constants.Events.Delivered.receipt(), [
-                        "id": (response.data?.id)!
-                    ])
-                }
+                let itemKey = "\((response.data?.id)!)::Delivered"
+                let data = [
+                    "id": (response.data?.id)!
+                ]
+                self.emit(Constants.Events.Delivered.receipt(), data)
+                self.registerEvent(Constants.Events.Delivered.receipt(), itemKey, data)
+                
                 if let item: Message = DB.shared.findById(.Message, id: (response.data?.id)!) as? Message {
                     item.status = Constants.Status.Delivered.rawValue
                     DB.shared.save()
                     self.delegates.forEach{ $0.socket(didReceiveStatus: item) }
                 }
-                self.queue.setValue({ fn() }, forKey: "\((response.data?.id)!)::Delivered")
-                fn()
             }
         }
         
@@ -140,7 +148,7 @@ class Socket {
             let response = Response<DataType.Message>(responseData)
             if response.code == 200 {
                 let itemKey = "\((response.data?.id)!)::Delivered"
-                self.queue.removeObject(forKey: itemKey)
+                self.removeEvent(id: itemKey)
             }
         }
 
@@ -155,14 +163,27 @@ class Socket {
     
     func sendMessage(_ message: Message) {
         print("Socket :: Sending message...")
-        let fn = { self.emit(Constants.Events.Sent.rawValue, [
+        let tmpid = UUID()
+        let data = [
             "sent": message.sent?.toString(),
             "body": message.body,
-            "recipient": message.recipient
-        ]) }
-        messageQueue.setValue(message, forKey: (message.sent?.toString())!)
-        queue.setValue({ fn() }, forKey: (message.sent?.toString())!)
-        fn()
+            "recipient": message.recipient,
+            "tmpid": tmpid.uuidString
+        ]
+        message.tmpid = tmpid
+        DB.shared.save()
+        registerEvent(Constants.Events.Sent.rawValue, (message.sent?.toString())!, data)
+        self.emit(Constants.Events.Sent.rawValue, data)
+    }
+    
+    private func registerEvent(_ name: String, _ id: String, _ data: [String: String?]) {
+        let encoder = JSONEncoder()
+        let encoded = try! encoder.encode(data)
+        DB.addEvent(name, id: id, data: String(data: encoded, encoding: .utf8)!)
+    }
+    
+    private func removeEvent(id: String) {
+        DB.shared.delete(.Event, predicate: NSPredicate(format: "id = %@", id as CVarArg))
     }
     
     func emit(_ event: String, _ data: [String: Any?]) {

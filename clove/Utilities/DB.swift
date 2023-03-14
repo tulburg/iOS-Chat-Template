@@ -18,11 +18,11 @@ class DB: NSObject {
     }()
     
     enum Model: String {
-        case Message, Broadcast, Comment
+        case Message, Event, Comment
     }
     
     let ModelClass: Dictionary<Model, AnyClass> = [
-        .Message: Message.self
+        .Message: Message.self, .Event: Event.self
     ]
     
     let context : NSManagedObjectContext!
@@ -43,14 +43,25 @@ class DB: NSObject {
         return DB.shared.update(.Message, predicate: NSPredicate(format: "id = %@", id as CVarArg), keyValue: ["status": status])
     }
     
+    @discardableResult static func addEvent(_ name: String, id: String, data: String) -> Bool {
+        return DB.shared.insert(.Event, keyValue: [
+            "name": name, "id": id, "data": data
+        ])
+    }
+    
+    static func clearEvent() -> Bool {
+        return DB.shared.delete(.Event, predicate: nil)
+    }
+    
     
     // MARK: - Base functions
     
-    @discardableResult func insert(_ model: Model, keyValue: Dictionary<String, Any>) -> Bool {
+    @discardableResult func insert(_ model: Model, keyValue: [String: Any]) -> Bool {
         let record = NSEntityDescription.insertNewObject(forEntityName: model.rawValue, into: context)
         keyValue.forEach({ item in
             record.setValue(item.value, forKey: item.key)
         })
+        print("Called", keyValue)
         return save()
     }
     

@@ -128,6 +128,8 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         let message = messages[indexPath.row]
         if indexPath.row < messages.count - 1 {
             nextMessage = messages[indexPath.row + 1]
+        }else {
+            nextMessage = nil
         }
         if indexPath.row > 1 {
             lastMessage = messages[indexPath.row - 1]
@@ -144,10 +146,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             if nextMessage != nil {
                 nextTimeDiff = (nextMessage?.sent?.timeIntervalSince1970)! - (message.sent?.timeIntervalSince1970)!
             }
-            if (!(message.body!.containsOnlyEmoji && (message.body?.count)! <= 4))
-                && nextTimeDiff > 120 {
-                showTail = true
-            }
+            if (nextTimeDiff > 120) { showTail = true }
             if (backTimeDiff > 60 * 24) { showTime = true }
             if (nextTimeDiff > 120) { showStatus = true }
             
@@ -164,7 +163,9 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             }
             
             if (nextTimeDiff > 120) { showTail = true }
-            if (backTimeDiff > 60 * 24) { showTime = true }
+            if (backTimeDiff > 60 * 24) {
+                showTime = true
+            }
             if (nextTimeDiff > 120) { showStatus = true }
         }
         
@@ -182,10 +183,6 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
             id.append("_emoji")
             showTail = false
         }
-        
-//        if showStatus && nextMessage?.sender == message.sender {
-//            showStatus = false
-//        }
         
         if indexPath.row == 0 {
             showTime = true
@@ -329,7 +326,7 @@ class MessagerViewController: ViewController, SocketDelegate, UITableViewDelegat
         tableView.register(OtherMessageCell.self, forCellReuseIdentifier: "other_message_cell_emoji_status")
         
         tableView.allowsSelection = false
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 24, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
     }
     
     func buildMessageField() {

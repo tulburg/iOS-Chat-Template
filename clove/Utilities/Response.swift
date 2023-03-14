@@ -30,9 +30,11 @@ class DataType {
     class Sent: ResponseProtocol {
         var id: String?
         var sent: Date?
+        var tmpid: UUID?
         required init(_ dict: NSDictionary) {
             id = dict.string("id")
             sent = dict.date("sent")
+            tmpid = UUID(uuidString: dict.string("tmpid")!)
         }
     }
     class Delivered: ResponseProtocol {
