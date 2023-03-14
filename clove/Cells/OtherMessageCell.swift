@@ -77,7 +77,7 @@ class OtherMessageCell: UITableViewCell, MessageCellProtocol {
         container.centerYAnchor.constraint(equalTo: timeIndicator.centerYAnchor).isActive = true
         
         contentView.add().horizontal(16).view(image, 32).gap(12).view(container).end(">=\(0.25 * frame.width)")
-        contentView.add().vertical(">=0").view(image, 32).end(showTime ? -4 : 4)
+        contentView.add().vertical(">=0").view(image, 32).end(12)
             
         tail = TailView(H: 32, W: 20, color: UIColor.awayMessageBackground)
         if showTail {

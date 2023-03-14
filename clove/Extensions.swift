@@ -351,22 +351,20 @@ extension UIButton {
         self.init()
         self.setTitle(text, for: .normal)
         self.titleLabel?.font = font
+        self.configuration = .filled()
+        self.configuration?.contentInsets = .init(top: 14, leading: 40, bottom: 14, trailing: 40)
+        self.configuration?.cornerStyle = .capsule
+        self.configuration?.baseBackgroundColor = .accent
+        self.configuration?.baseForegroundColor = .blackWhite
         if image != nil {
             self.setImage(image, for: .normal)
-            self.contentEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 8)
-            self.imageEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 16)
         }
-        
-        self.backgroundColor = UIColor.purple
-        self.titleLabel?.textColor = UIColor.white
-        self.layer.cornerRadius = 12
     }
     
     func rightImage() {
         self.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         self.titleLabel?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         self.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
-        self.imageEdgeInsets = UIEdgeInsets(top: 0, left: -40, bottom: 0, right: 0)
     }
     
     func disable(_ disable: Bool) {
